@@ -45,4 +45,12 @@ const App = () => {
         <div id="range-a-value">{rangeA}</div>
       </div>
       <div id="range-b-holder">
-       
+        <input type="range" defaultValue={rangeB} max={maxSum - rangeA} onChange={handleRangeBChange} />
+        <div id="range-b-value">{rangeB}</div>
+      </div>
+      <div id="sum">{rangeA + rangeB}</div>
+    </div>
+  );
+};
+
+export default App;
