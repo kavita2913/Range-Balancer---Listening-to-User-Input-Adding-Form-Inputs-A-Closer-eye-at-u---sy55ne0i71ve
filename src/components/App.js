@@ -1,59 +1,69 @@
-import React, { useState } from 'react'
-import '../styles/App.css'
+import React, { useState } from 'react';
+import './App.css';
 
-const App = () => {
-  const [maxSum, setMaxSum] = useState(50)
-  const [rangeA, setRangeA] = useState(0)
-  const [rangeB, setRangeB] = useState(50)
+function App() {
+  const [maxSum, setMaxSum] = useState(50);
+  const [rangeA, setRangeA] = useState(0);
+  const [rangeB, setRangeB] = useState(50);
 
   const handleRangeAChange = (event) => {
-    const newValue = parseInt(event.target.value)
-    const newMax = Math.min(maxSum - rangeB, 50 - rangeB)
-    setRangeA(newValue)
-    setMaxSum(newMax)
-  }
+    setRangeA(event.target.value);
+    setRangeB(maxSum - event.target.value);
+  };
 
   const handleRangeBChange = (event) => {
-    const newValue = parseInt(event.target.value)
-    const newMax = Math.min(maxSum - rangeA, 50 - rangeA)
-    setRangeB(newValue)
-    setMaxSum(newMax)
-  }
+    setRangeB(event.target.value);
+    setRangeA(maxSum - event.target.value);
+  };
+
+  const handleMaxSumChange = (event) => {
+    setMaxSum(event.target.value);
+    setRangeB(maxSum - rangeA);
+  };
 
   return (
-    <div>
+    <div className="App">
       <div id="max-sum-holder">
+        <label htmlFor="max-sum">Max Sum:</label>
         <input
           type="number"
-          min="1"
-          max="100"
+          id="max-sum"
+          name="max-sum"
           value={maxSum}
-          onChange={(event) => setMaxSum(parseInt(event.target.value))}
+          min="0"
+          max="100"
+          onChange={handleMaxSumChange}
         />
       </div>
       <div id="range-a-holder">
+        <label htmlFor="range-a">Range A:</label>
         <input
           type="range"
-          min="0"
-          max={Math.min(maxSum, 50)}
+          id="range-a"
+          name="range-a"
           value={rangeA}
+          min="0"
+          max={rangeB}
           onChange={handleRangeAChange}
         />
         <div id="range-a-value">{rangeA}</div>
       </div>
       <div id="range-b-holder">
+        <label htmlFor="range-b">Range B:</label>
         <input
           type="range"
-          min="0"
-          max={Math.min(maxSum, 50)}
+          id="range-b"
+          name="range-b"
           value={rangeB}
+          min={rangeA}
+          max={maxSum}
           onChange={handleRangeBChange}
         />
         <div id="range-b-value">{rangeB}</div>
       </div>
       <div id="sum">{rangeA + rangeB}</div>
     </div>
-  )
+  );
 }
 
 export default App;
