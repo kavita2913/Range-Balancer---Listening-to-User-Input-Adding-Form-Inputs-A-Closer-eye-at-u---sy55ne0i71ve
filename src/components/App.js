@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState } from 'react'
+import '../styles/App.css'
 
 function App() {
   const [maxSum, setMaxSum] = useState(50);
