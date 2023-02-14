@@ -18,10 +18,17 @@ const App = () => {
     setRangeA(maxSum - value);
   };
 
+  const handleMaxSumChange = (event) => {
+    const newMaxSum = parseInt(event.target.value);
+    setMaxSum(newMaxSum);
+    setRangeA(Math.min(rangeA, newMaxSum - rangeB));
+    setRangeB(Math.min(rangeB, newMaxSum - rangeA));
+  };
+
   return (
     <div className="App">
       <div id="max-sum-holder">
-        <input type="number" value={maxSum} onChange={(event) => setMaxSum(parseInt(event.target.value))} />
+        <input type="number" value={maxSum} onChange={handleMaxSumChange} />
       </div>
       <div id="range-a-holder">
         <input type="range" value={rangeA} max={maxSum - rangeB} onChange={handleRangeAChange} />
