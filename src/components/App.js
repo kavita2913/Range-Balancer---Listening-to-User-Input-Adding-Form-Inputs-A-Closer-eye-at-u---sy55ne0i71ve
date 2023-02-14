@@ -1,56 +1,59 @@
-import React, { useState } from 'react';
-import '../styles/App.css';
+import React, { useState } from 'react'
+import '../styles/App.css'
 
 const App = () => {
-  const [maxSum, setMaxSum] = useState(50);
-  const [rangeA, setRangeA] = useState(0);
-  const [rangeB, setRangeB] = useState(50);
+  const [maxSum, setMaxSum] = useState(50)
+  const [rangeA, setRangeA] = useState(0)
+  const [rangeB, setRangeB] = useState(50)
 
   const handleRangeAChange = (event) => {
-    const value = parseInt(event.target.value);
-    const newMax = maxSum - rangeB;
-    if (value > newMax) {
-      setRangeA(newMax);
-    } else {
-      setRangeA(value);
-    }
-  };
+    const newValue = parseInt(event.target.value)
+    const newMax = Math.min(maxSum - rangeB, 50 - rangeB)
+    setRangeA(newValue)
+    setMaxSum(newMax)
+  }
 
   const handleRangeBChange = (event) => {
-    const value = parseInt(event.target.value);
-    const newMax = maxSum - rangeA;
-    if (value > newMax) {
-      setRangeB(newMax);
-    } else {
-      setRangeB(value);
-    }
-  };
-
-  const handleMaxSumChange = (event) => {
-    const newMaxSum = parseInt(event.target.value);
-    const newMaxA = Math.min(rangeA, newMaxSum - rangeB);
-    const newMaxB = Math.min(rangeB, newMaxSum - newMaxA);
-    setMaxSum(newMaxSum);
-    setRangeA(newMaxA);
-    setRangeB(newMaxB);
-  };
+    const newValue = parseInt(event.target.value)
+    const newMax = Math.min(maxSum - rangeA, 50 - rangeA)
+    setRangeB(newValue)
+    setMaxSum(newMax)
+  }
 
   return (
-    <div className="App">
+    <div>
       <div id="max-sum-holder">
-        <input type="number" defaultValue={maxSum} onChange={handleMaxSumChange} />
+        <input
+          type="number"
+          min="1"
+          max="100"
+          value={maxSum}
+          onChange={(event) => setMaxSum(parseInt(event.target.value))}
+        />
       </div>
       <div id="range-a-holder">
-        <input type="range" defaultValue={rangeA} max={maxSum - rangeB} onChange={handleRangeAChange} />
+        <input
+          type="range"
+          min="0"
+          max={Math.min(maxSum, 50)}
+          value={rangeA}
+          onChange={handleRangeAChange}
+        />
         <div id="range-a-value">{rangeA}</div>
       </div>
       <div id="range-b-holder">
-        <input type="range" defaultValue={rangeB} max={maxSum - rangeA} onChange={handleRangeBChange} />
+        <input
+          type="range"
+          min="0"
+          max={Math.min(maxSum, 50)}
+          value={rangeB}
+          onChange={handleRangeBChange}
+        />
         <div id="range-b-value">{rangeB}</div>
       </div>
       <div id="sum">{rangeA + rangeB}</div>
     </div>
-  );
-};
+  )
+}
 
 export default App;
