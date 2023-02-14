@@ -1,28 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import '../styles/App.css';
-
 const App = () => {
   const [maxSum, setMaxSum] = useState(50);
   const [rangeA, setRangeA] = useState(0);
   const [rangeB, setRangeB] = useState(50);
-  
+  const [maxRangeA, setMaxRangeA] = useState(0);
+  const [maxRangeB, setMaxRangeB] = useState(50);
+
   const handleRangeAChange = (event) => {
-    setRangeA(parseInt(event.target.value));
+    const newRangeA = parseInt(event.target.value);
+    setRangeA(newRangeA);
+    setMaxRangeB(maxSum - newRangeA);
   };
-  
+
   const handleRangeBChange = (event) => {
-    setRangeB(parseInt(event.target.value));
+    const newRangeB = parseInt(event.target.value);
+    setRangeB(newRangeB);
+    setMaxRangeA(maxSum - newRangeB);
   };
-  
+
   const handleMaxSumChange = (event) => {
     const newMaxSum = parseInt(event.target.value);
-    const newMaxRangeA = Math.min(rangeA, newMaxSum - rangeB);
-    const newMaxRangeB = Math.min(rangeB, newMaxSum - newMaxRangeA);
     setMaxSum(newMaxSum);
-    setRangeA(newMaxRangeA);
-    setRangeB(newMaxRangeB);
+    setMaxRangeA(Math.min(rangeA, newMaxSum - rangeB));
+    setMaxRangeB(Math.min(rangeB, newMaxSum - rangeA));
   };
-  
+
   return (
     <div>
       <div id="max-sum-holder">
@@ -39,8 +42,7 @@ const App = () => {
           type="range"
           value={rangeA}
           onChange={handleRangeAChange}
-          min="0"
-          max={Math.min(maxSum, rangeB)}
+          max={maxRangeA}
         />
         <div id="range-a-value">{rangeA}</div>
       </div>
@@ -49,14 +51,13 @@ const App = () => {
           type="range"
           value={rangeB}
           onChange={handleRangeBChange}
-          min="0"
-          max={Math.min(maxSum, 50)}
+          max={maxRangeB}
         />
         <div id="range-b-value">{rangeB}</div>
       </div>
       <div id="sum">{rangeA + rangeB}</div>
     </div>
   );
-}
+};
 
 export default App;
